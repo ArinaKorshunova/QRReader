@@ -1,0 +1,49 @@
+﻿<Window x:Class="QRReader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewmodel="clr-namespace:QRReader.ViewModel"
+        Title="Распознавание штрих-кода" Height="350" Width="525" WindowState="Maximized" ResizeMode="CanResize">
+
+    <Window.DataContext>
+        <viewmodel:MainWindowsViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="16*"/>
+            <ColumnDefinition Width="20*" MinWidth="100"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="20*" MinWidth="500"/>
+        </Grid.ColumnDefinitions>
+        <GridSplitter HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Stretch" 
+                  Grid.Column="2" Grid.RowSpan="3" ResizeBehavior="PreviousAndNext"
+                  Width="Auto" Background="#423535" Height="Auto" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button Command="{Binding LoadFileCommand}" Background="DarkCyan" IsEnabled="{Binding ScannEnable}" Margin="10" Content="Загрузить" HorizontalAlignment="Left" VerticalAlignment="Stretch" Padding="5"></Button>
+            <Button Command="{Binding ScannCommand}" Background="DarkCyan" IsEnabled="{Binding ScannEnable}" Margin="10" Content="Сканировать" HorizontalAlignment="Left" VerticalAlignment="Stretch" Padding="5"></Button>
+            <Button Command="{Binding SaveScanCommand}" Background="DarkCyan" Margin="10" Content="Сохранить изображение" HorizontalAlignment="Left" VerticalAlignment="Stretch" Padding="5"></Button>
+        </StackPanel>
+        <Button Grid.Column="1" IsEnabled="{Binding ReaderIsEnable}" Background="Tomato" HorizontalAlignment="Right" Margin="10" Padding="5" Content="Распознать" Command="{Binding DecodeQRCodeCommand}"></Button>
+
+        <Border Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" BorderThickness="2" BorderBrush="#423535" Margin="10">
+            <Image Margin="12"  Stretch="Uniform" Source="{Binding LoadImage, Mode=TwoWay}" 
+            RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" HorizontalAlignment="Left"></Image>
+        </Border>
+
+        <Border Grid.Column="3" Grid.RowSpan="3" BorderThickness="2" BorderBrush="#423535" Margin="10">
+            <Grid >
+            <Grid.Background>
+                <SolidColorBrush Color="White" Opacity="0.1"></SolidColorBrush>
+            </Grid.Background>
+                
+            <TextBox Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Text="{Binding Text}" TextWrapping="Wrap" FontSize="20"></TextBox>
+        </Grid>
+        </Border>
+    </Grid>
+</Window>
